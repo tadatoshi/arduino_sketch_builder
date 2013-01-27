@@ -1,6 +1,7 @@
 # ArduinoSketchBuilder
 
-Performs calling the code to compile Arduino sketch and upload it to Arduino by Ruby, instead of using Arduino IDE. 
+Performs calling the code to compile Arduino sketch and upload it to Arduino
+by Ruby, instead of using Arduino IDE.
 
 ## Installation
 
