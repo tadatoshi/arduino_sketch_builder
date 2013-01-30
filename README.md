@@ -19,8 +19,7 @@ Or install it yourself as:
 
 ## Usage
 
-Arduino CMake
--------------
+### Arduino CMake
 
 This section describes the usage for the portion based on **Arduino CMake** (https://github.com/queezythegreat/arduino-cmake)
 
