@@ -11,7 +11,7 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
   end
 
   after(:each) do
-    # FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
+    FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
   end  
 
   it "should execute cmake and make in sequence in build directory" do
