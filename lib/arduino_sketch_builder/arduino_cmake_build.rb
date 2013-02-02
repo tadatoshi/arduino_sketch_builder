@@ -12,27 +12,25 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   def cmake(build_directory, main_directory)
 
-  	# current_directory = Dir.pwd
     Dir.chdir(build_directory)
 
     Open3.popen3("cmake #{main_directory}") do |stdin, stdout, stderr, wait_thread|
       pid = wait_thread.pid
-
-      # puts "pid: #{pid}"
- 
-      exit_status = wait_thread.value # Process::Status object returned.
-
-      # puts "exit_status.success?: #{exit_status.success?}"
-      # puts "exit_status: #{exit_status}"
-
+      exit_status = wait_thread.value
       @state = :cmake_complete if exit_status.success?
     end
-
-    # Dir.chdir(current_directory)
 
   end
 
   def make(build_directory)
+
+    Dir.chdir(build_directory)
+
+    Open3.popen3("make") do |stdin, stdout, stderr, wait_thread|
+      pid = wait_thread.pid
+      exit_status = wait_thread.value
+      @state = :make_complete if exit_status.success?
+    end    
 
   end
 
