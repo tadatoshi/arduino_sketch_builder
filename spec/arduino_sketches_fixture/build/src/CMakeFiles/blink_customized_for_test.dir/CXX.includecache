@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/blink_customized_for_test_BlinkCustomizedForTest.cpp
+Arduino.h
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/Arduino.h
+

@@ -1,0 +1,5 @@
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/CMakeFiles/blink_customized_for_test.dir
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/CMakeFiles/blink_customized_for_test-size.dir
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/CMakeFiles/blink_customized_for_test-upload.dir
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/CMakeFiles/uno_CORE.dir
+/Users/tadatoshi/Documents/development/projects/arduino_sketch_builder/spec/arduino_sketches_fixture/build/src/CMakeFiles/upload.dir

@@ -11,7 +11,7 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
   end
 
   after(:each) do
-    FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
+    # FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
   end  
 
   it "should execute cmake and make in sequence in build directory" do
@@ -30,6 +30,10 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
 
     @arduino_cmake_build.state.should == :make_complete
     File.exists?("#{BUILD_DIRECTORY}/src/blink_customized_for_test.hex").should be_true
+
+    @arduino_cmake_build.make_upload(BUILD_DIRECTORY).should == :make_upload_complete
+
+    @arduino_cmake_build.state.should == :make_upload_complete
 
   end
 
@@ -74,5 +78,28 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
       .to_not raise_error 
 
   end  
+
+  it "should execute make_upload only when the state is make_complete" do
+
+    @arduino_cmake_build.instance_eval("@state=INITIAL")
+    expect { @arduino_cmake_build.make_upload(BUILD_DIRECTORY) }
+      .to raise_error("Wrong state 'initial': can't call make_upload when the state is not 'make_complete'")
+    
+    @arduino_cmake_build.instance_eval("@state=CMAKE_COMPLETE")
+    expect { @arduino_cmake_build.make_upload(BUILD_DIRECTORY) }
+      .to raise_error("Wrong state 'cmake_complete': can't call make_upload when the state is not 'make_complete'")  
+
+    @arduino_cmake_build.instance_eval("@state=MAKE_UPLOAD_COMPLETE")
+    expect { @arduino_cmake_build.make_upload(BUILD_DIRECTORY) }
+      .to raise_error("Wrong state 'make_upload_complete': can't call make_upload when the state is not 'make_complete'") 
+
+    @arduino_cmake_build.instance_eval("@state=INITIAL")
+    @arduino_cmake_build.cmake(BUILD_DIRECTORY, MAIN_DIRECTORY)
+    @arduino_cmake_build.make(BUILD_DIRECTORY)
+    @arduino_cmake_build.state.should == :make_complete
+    expect { @arduino_cmake_build.make_upload(BUILD_DIRECTORY) }
+      .to_not raise_error 
+
+  end    
 
 end

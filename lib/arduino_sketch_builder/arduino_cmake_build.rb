@@ -65,4 +65,27 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   end
 
+  def make_upload(build_directory)
+
+    unless @state == MAKE_COMPLETE
+      raise "Wrong state '#{self.state}': can't call make_upload when the state is not '#{MAKE_COMPLETE.value}'"
+    end    
+
+    Dir.chdir(build_directory)
+
+    Open3.popen3("make upload") do |stdin, stdout, stderr, wait_thread|
+      pid = wait_thread.pid
+      exit_status = wait_thread.value
+      if exit_status.success?
+        @state = MAKE_UPLOAD_COMPLETE
+      else
+        @state = State.new(:make_upload_incomplete, stderr.gets)
+        puts "error message: #{self.message}"
+      end
+    end    
+
+    self.state
+
+  end  
+
 end
