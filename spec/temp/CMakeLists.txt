@@ -1,0 +1,10 @@
+set(ARDUINO_DEFAULT_BOARD uno) # Default Board ID, when not specified
+set(ARDUINO_DEFAULT_PORT /dev/tty.usbmodem411) # Default Port, when not specified
+
+#====================================================================#
+# TestSketch
+#====================================================================#
+generate_arduino_firmware(test_sketch
+    SKETCH TestSketch
+    PROGRAMMER arduino_sketch_builder
+    NO_AUTOLIBS)

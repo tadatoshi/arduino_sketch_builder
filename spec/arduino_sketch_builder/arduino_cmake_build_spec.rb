@@ -6,12 +6,12 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
   BUILD_DIRECTORY = "#{MAIN_DIRECTORY}/build"
 
   before(:each) do
-  	FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
+  	FileUtils.rm_rf(Dir.glob("#{BUILD_DIRECTORY}/*"))
     @arduino_cmake_build = ArduinoSketchBuilder::ArduinoCmakeBuild.new
   end
 
   after(:each) do
-    FileUtils.rm_rf(Dir.glob(File.expand_path('../../arduino_sketches_fixture/build/*', __FILE__)))
+    FileUtils.rm_rf(Dir.glob("#{BUILD_DIRECTORY}/*"))
   end  
 
   it "should execute cmake and make in sequence in build directory" do
