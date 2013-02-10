@@ -17,19 +17,19 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
   it "should execute cmake and make in sequence in build directory" do
 
     @arduino_cmake_build.state.should == :initial
-    File.exists?("#{BUILD_DIRECTORY}/Makefile").should be_false
+    File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_false
 
     @arduino_cmake_build.cmake(BUILD_DIRECTORY, MAIN_DIRECTORY).should == :cmake_complete
 
     @arduino_cmake_build.state.should == :cmake_complete
-    File.exists?("#{BUILD_DIRECTORY}/Makefile").should be_true
+    File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_true
 
-    File.exists?("#{BUILD_DIRECTORY}/src/blink_customized_for_test.hex").should be_false
+    File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_false
 
     @arduino_cmake_build.make(BUILD_DIRECTORY).should == :make_complete
 
     @arduino_cmake_build.state.should == :make_complete
-    File.exists?("#{BUILD_DIRECTORY}/src/blink_customized_for_test.hex").should be_true
+    File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_true
 
     @arduino_cmake_build.make_upload(BUILD_DIRECTORY).should == :make_upload_complete
 

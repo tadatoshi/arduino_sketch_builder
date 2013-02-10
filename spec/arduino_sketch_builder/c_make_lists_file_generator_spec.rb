@@ -12,12 +12,12 @@ describe ArduinoSketchBuilder::CMakeListsFileGenerator do
 
   it "should generate CMakeLists.txt file for a given Arduino sketch name" do
 
-  	File.exists?("#{TEMP_DIRECTORY}/CMakeLists.txt").should be_false
+  	File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_false
 
     @c_make_lists_file_generator.generate("TestSketch", TEMP_DIRECTORY)
 
-    File.exists?("#{TEMP_DIRECTORY}/CMakeLists.txt").should be_true
-    File.read("#{TEMP_DIRECTORY}/CMakeLists.txt").should == File.read("#{FIXTURES_DIRECTORY}/CMakeListsForTestSketch.txt")
+    File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_true
+    File.read(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "CMakeListsForTestSketch.txt"))
 
   end
 
