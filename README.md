@@ -25,23 +25,33 @@ This section describes the usage for the portion based on **Arduino CMake** (htt
 
 ### Directory structure
 
-The default directory structure is 
-  (name of Arduino sketch underlined)
-     |--build
-     |--src
-     |   |--(name of Arduino sketch)
-     |        |--(Arduino sketch file)
-     |   |--CMakeLists.txt
-     |--CMakeLists.txt  
+The default directory structure is
+(root directory)
+  |- cmake
+  |    |- ArduinoToolchain.cmake
+  |    |- Platform
+  |        |- Arduino.cmake  
+  |- (name of Arduino sketch underlined)
+       |--build
+       |--src
+       |   |--(name of Arduino sketch)
+       |        |--(Arduino sketch file)
+       |   |--CMakeLists.txt
+       |--CMakeLists.txt  
 
 example:
-  blink_customized
-     |--build
-     |--src
-     |   |--BlinkCustomized
-     |        |--BlinkCustomized.ino
-     |   |--CMakeLists.txt
-     |--CMakeLists.txt   
+~/.uploaded_arduino_sketches  
+  |- cmake
+  |    |- ArduinoToolchain.cmake
+  |    |- Platform
+  |        |- Arduino.cmake  
+  |- blink_customized
+       |--build
+       |--src
+       |   |--BlinkCustomized
+       |        |--BlinkCustomized.ino
+       |   |--CMakeLists.txt
+       |--CMakeLists.txt   
 
 ## Contributing
 
