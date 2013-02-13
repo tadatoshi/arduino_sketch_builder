@@ -23,7 +23,25 @@ Or install it yourself as:
 
 This section describes the usage for the portion based on **Arduino CMake** (https://github.com/queezythegreat/arduino-cmake)
 
+### Directory structure
 
+The default directory structure is 
+  (name of Arduino sketch underlined)
+     |--build
+     |--src
+     |   |--(name of Arduino sketch)
+     |        |--(Arduino sketch file)
+     |   |--CMakeLists.txt
+     |--CMakeLists.txt  
+
+example:
+  blink_customized
+     |--build
+     |--src
+     |   |--BlinkCustomized
+     |        |--BlinkCustomized.ino
+     |   |--CMakeLists.txt
+     |--CMakeLists.txt   
 
 ## Contributing
 
