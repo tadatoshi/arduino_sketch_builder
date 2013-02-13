@@ -19,4 +19,26 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activesupport"
   gem.add_development_dependency "rspec"  
+
+  # The following code is a modified code based on http://somethingaboutcode.wordpress.com/2012/09/27/include-files-from-git-submodules-when-building-a-ruby-gem/
+  # get an array of submodule dirs by executing 'pwd' inside each submodule
+  `git submodule --quiet foreach pwd`.split($\).each do |submodule_path|
+
+    relative_submodule_path = submodule_path.gsub(Dir.pwd, '')
+
+    # for each submodule, change working directory to that submodule
+    Dir.chdir(submodule_path) do
+ 
+      # issue git ls-files in submodule's directory
+      submodule_files = `git ls-files`.split($\)
+ 
+      # prepend the submodule path relative to the gem's root dir to create file paths
+      submodule_files_paths = submodule_files.map do |filename|
+        File.join(relative_submodule_path, filename)
+      end
+ 
+      # add relative paths to gem.files
+      gem.files += submodule_files_paths
+    end
+  end  
 end
