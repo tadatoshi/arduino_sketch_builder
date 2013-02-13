@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "arduino_sketch_builder"
   gem.version       = ArduinoSketchBuilder::VERSION
   gem.authors       = ["Tadatoshi Takahashi"]
-  gem.email         = ["tadatoshi.3.takahashi@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["tadatoshi@gmail.com"]
+  gem.description   = "Builds Arduino sketch"
+  gem.summary       = "Performs calling the code to compile Arduino sketch and upload it to Arduino by Ruby, instead of using Arduino IDE."
+  gem.homepage      = "https://github.com/tadatoshi/arduino_sketch_builder"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
