@@ -18,3 +18,5 @@ print_board_list()
 print_programmer_list()
 
 add_subdirectory(src)   #add the src directory into build
+
+link_directories(~/temp/libraries)

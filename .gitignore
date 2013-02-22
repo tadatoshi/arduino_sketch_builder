@@ -20,3 +20,4 @@ tmp
 lib/arduino_sketches/build
 spec/arduino_sketches_fixture/build/**/*.*
 spec/temp/**/*.*
+spec/temp/.*

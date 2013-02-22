@@ -3,15 +3,22 @@ require 'active_support/core_ext/string/inflections'
 class ArduinoSketchBuilder::Setup
 
   ARDUINO_CMAKE_DIRECTORY = File.expand_path('../../../arduino-cmake', __FILE__)
+  TEMPLATES_DIRECTORY = File.expand_path('../../../templates', __FILE__)
 
   def configure(root_directory)
 
-    FileUtils.mkdir_p(File.join(root_directory, 'cmake', 'Platform'))
-
-    File.write(File.join(root_directory, 'cmake', 'ArduinoToolchain.cmake'), File.read(File.join(ARDUINO_CMAKE_DIRECTORY, 'cmake', 'ArduinoToolchain.cmake')))    
-    File.write(File.join(root_directory, 'cmake', 'Platform', 'Arduino.cmake'), File.read(File.join(ARDUINO_CMAKE_DIRECTORY, 'cmake', 'Platform', 'Arduino.cmake')))            
+    FileUtils.cp_r(File.join(ARDUINO_CMAKE_DIRECTORY, 'cmake'), root_directory)
 
     FileUtils.chmod_R('og-rwx', File.join(root_directory, 'cmake'))
+
+    FileUtils.mkdir_p(File.join(root_directory, 'libraries'))
+    FileUtils.cp(File.join(TEMPLATES_DIRECTORY, 'gitkeep_template'), File.join(root_directory, 'libraries', '.gitkeep'))
+
+    FileUtils.chmod_R('og-rwx', File.join(root_directory, 'libraries'))
+    FileUtils.chmod('og-rwx', File.join(root_directory, 'libraries', '.gitkeep'))
+
+    FileUtils.cp(File.join(TEMPLATES_DIRECTORY, 'root_gitignore_template'), File.join(root_directory, '.gitignore'))    
+    FileUtils.chmod('og-rwx', File.join(root_directory, '.gitignore'))
 
   end
 
