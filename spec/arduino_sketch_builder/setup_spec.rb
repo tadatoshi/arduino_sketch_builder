@@ -72,7 +72,7 @@ describe ArduinoSketchBuilder::Setup do
       File.exists?(File.join(root_directory, "blink_customized_for_test", "src", "BlinkCustomizedForTest", "BlinkCustomizedForTest.ino")).should be_true
       Dir.exists?(File.join(root_directory, "blink_customized_for_test", "build")).should be_true
 
-      # The following checks the generated file with the full path, hence, system specific (e.g. /Users/tadatoshi). 
+      # The following checks the generated file with the full path, hence, system specific (e.g. /Users/). 
       # Hence, it's considered that the unit test for c_make_lists_file_generator covers it. 
       # File.read(File.join(root_directory, "blink_customized_for_test", "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "MainCMakeLists.txt"))
       # This one also, it's considered that the unit test for c_make_lists_file_generator covers it.

@@ -17,11 +17,19 @@ Or install it yourself as:
 
     $ gem install arduino_sketch_builder
 
+## Requirements
+
+Works with Ruby 1.9.3 and Ruby 2.0.0 (Tested with them). 
+
+Arduino SDK version 0.19 or higher. 
+
 ## Usage
 
 ### Arduino CMake
 
-This section describes the usage for the portion based on **Arduino CMake** (https://github.com/queezythegreat/arduino-cmake)
+This gem uses the code from **Arduino CMake** (https://github.com/queezythegreat/arduino-cmake). 
+Originally, **Arduino CMake** was included as GIT submodule in this gem. 
+But there was a problem so now the necessary **Arduino CMake** codes are copied in this gem (arduino-cmake directory). 
 
 ### Directory structure
 
@@ -41,7 +49,7 @@ The default directory structure is
          |--CMakeLists.txt  
 
 example:
-  ~/.uploaded_arduino_sketches  
+  ~/.arduino_sketches  
     |- cmake
     |    |- ArduinoToolchain.cmake
     |    |- Platform
