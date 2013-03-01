@@ -23,44 +23,46 @@ Works with Ruby 1.9.3 and Ruby 2.0.0 (Tested with them).
 
 Arduino SDK version 0.19 or higher. 
 
-## Usage
-
 ### Arduino CMake
 
 This gem uses the code from **Arduino CMake** (https://github.com/queezythegreat/arduino-cmake). 
+
 Originally, **Arduino CMake** was included as GIT submodule in this gem. 
 But there was a problem so now the necessary **Arduino CMake** codes are copied in this gem (arduino-cmake directory). 
+
+## Usage
 
 ### Directory structure
 
 The default directory structure is 
-  The default directory structure is
-  (root directory)
-    |- cmake
-    |    |- ArduinoToolchain.cmake
-    |    |- Platform
-    |        |- Arduino.cmake  
-    |- (name of Arduino sketch underlined)
-         |--build
-         |--src
-         |   |--(name of Arduino sketch)
-         |        |--(Arduino sketch file)
-         |   |--CMakeLists.txt
-         |--CMakeLists.txt  
+
+    (root directory)
+      |- cmake
+      |    |- ArduinoToolchain.cmake
+      |    |- Platform
+      |        |- Arduino.cmake  
+      |- (name of Arduino sketch underlined)
+           |--build
+           |--src
+           |   |--(name of Arduino sketch)
+           |        |--(Arduino sketch file)
+           |   |--CMakeLists.txt
+           |--CMakeLists.txt  
 
 example:
-  ~/.arduino_sketches  
-    |- cmake
-    |    |- ArduinoToolchain.cmake
-    |    |- Platform
-    |        |- Arduino.cmake  
-    |- blink_customized
-         |--build
-         |--src
-         |   |--BlinkCustomized
-         |        |--BlinkCustomized.ino
-         |   |--CMakeLists.txt
-         |--CMakeLists.txt      
+
+    ~/.arduino_sketches  
+      |- cmake
+      |    |- ArduinoToolchain.cmake
+      |    |- Platform
+      |        |- Arduino.cmake  
+      |- blink_customized
+           |--build
+           |--src
+           |   |--BlinkCustomized
+           |        |--BlinkCustomized.ino
+           |   |--CMakeLists.txt
+           |--CMakeLists.txt      
 
 ## Contributing
 
