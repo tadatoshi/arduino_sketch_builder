@@ -19,7 +19,10 @@ Or install it yourself as:
 
 ## Requirements
 
-Works with Ruby 1.9.3 and Ruby 2.0.0 (Tested with them). 
+Ruby 2.0.0 or more. 
+
+ * If ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT are used to specify the board ID (e.g uno) and the port (e.g. /dev/tty.usbmodem411) instead of passing them to the method in Ruby code, works with Ruby 1.9.3, too. 
+ * Strongly recommended to use Ruby 2.0.0 since this gem is intended to use its benefits and Ruby 2.0.0 is compatible with Ruby 1.9.3 if you need to run other code written for Ruby 1.9.3 with this gem. 
 
 Arduino SDK version 0.19 or higher. 
 
@@ -35,6 +38,8 @@ But there was a problem so now the necessary **Arduino CMake** codes are copied 
 ## Usage
 
 ### Directory structure
+
+This is based on the directory structure by **Arduino CMake** with modification to make the directory structure for each Arduino sketch indepedent from each other. Also GIT related files (such as .gitignore and .gitkeep) are automatically added (but doesn't execute GIT commands so if GIT is not used, those files can be simply ignored). 
 
 The default directory structure is 
 
@@ -65,6 +70,14 @@ example:
            |        |--BlinkCustomized.ino
            |   |--CMakeLists.txt
            |--CMakeLists.txt    
+
+### Arduino board type and port to access the board
+
+The default board ID: uno
+
+The default port: /dev/tty.usbmodem411
+
+You can change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT environment variables. 
 
 ### Code example
 

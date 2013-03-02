@@ -32,4 +32,31 @@ describe ArduinoSketchBuilder::CMakeListsFileGenerator do
 
   end
 
+  context "Arduino board type and port" do
+
+    it "should generate CMakeLists.txt file with the default board ID and port if they are not specified" do
+
+      File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_false
+
+      @c_make_lists_file_generator.generate_sketch_specific("TestSketch", TEMP_DIRECTORY)
+
+      File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_true
+      File.read(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "CMakeListsForTestSketch.txt"))      
+
+    end
+
+    it "should generate CMakeLists.txt file with the specified board ID and port" do
+
+      File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_false
+
+      @c_make_lists_file_generator.generate_sketch_specific("TestSketch", TEMP_DIRECTORY, board_type: "diecimila", board_port: "/dev/cu.usbmodem411")
+
+      File.exists?(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should be_true
+      File.read(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should_not == File.read(File.join(FIXTURES_DIRECTORY, "CMakeListsForTestSketch.txt")) 
+      File.read(File.join(TEMP_DIRECTORY, "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "CMakeListsForTestSketch2.txt"))     
+
+    end    
+
+  end
+
 end

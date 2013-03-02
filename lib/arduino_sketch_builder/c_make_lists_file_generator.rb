@@ -6,6 +6,8 @@ class ArduinoSketchBuilder::CMakeListsFileGenerator
 
   attr_reader :root_directory
   attr_reader :sketch_name
+  attr_reader :board_type
+  attr_reader :board_port
 
   def generate_main(root_directory, c_make_lists_file_directory)
 
@@ -19,9 +21,11 @@ class ArduinoSketchBuilder::CMakeListsFileGenerator
 
   end
 
-  def generate_sketch_specific(sketch_name, c_make_lists_file_directory)
+  def generate_sketch_specific(sketch_name, c_make_lists_file_directory, board_type: "uno", board_port: "/dev/tty.usbmodem411")
 
   	@sketch_name = sketch_name
+    @board_type = board_type
+    @board_port = board_port
 
     erb = ERB.new(File.read("#{TEMPLATES_DIRECTORY}/SourceCMakeListsTemplate.txt.erb"))
 
