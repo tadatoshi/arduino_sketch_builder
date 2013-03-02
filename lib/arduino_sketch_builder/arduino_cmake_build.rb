@@ -11,7 +11,9 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   STATE_SEQUENCE = [INITIAL, CMAKE_COMPLETE, MAKE_COMPLETE, MAKE_UPLOAD_COMPLETE]
 
-  def initialize
+  def initialize(main_directory, build_directory)
+    @main_directory = main_directory
+    @build_directory = build_directory
     @state = INITIAL
   end
 
@@ -25,15 +27,15 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   [:cmake, :make, :make_upload].each_with_index do |method_name, index|
     
-    define_method(method_name) do |build_directory, main_directory=nil|
+    define_method(method_name) do
 
       unless @state == STATE_SEQUENCE[index]
         raise "Wrong state '#{self.state}': can't call #{method_name} when the state is not '#{STATE_SEQUENCE[index].value}'"
       end
 
-      Dir.chdir(build_directory)
+      Dir.chdir(@build_directory)
 
-      Open3.popen3("#{method_name.to_s.sub('_',' ')} #{main_directory ? main_directory : ''}") do |stdin, stdout, stderr, wait_thread|
+      Open3.popen3("#{method_name.to_s.sub('_',' ')} #{method_name == :cmake ? @main_directory : ''}") do |stdin, stdout, stderr, wait_thread|
         pid = wait_thread.pid
         exit_status = wait_thread.value
         if exit_status.success?

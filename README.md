@@ -39,7 +39,13 @@ But there was a problem so now the necessary **Arduino CMake** codes are copied 
 
 ### Directory structure
 
-This is based on the directory structure by **Arduino CMake** with modification to make the directory structure for each Arduino sketch indepedent from each other. Also GIT related files (such as .gitignore and .gitkeep) are automatically added (but doesn't execute GIT commands so if GIT is not used, those files can be simply ignored). 
+This is based on the directory structure by **Arduino CMake** with modification to make the directory structure for each Arduino sketch indepedent from each other. 
+
+It is also for not putting cmake related files in the default Arduino directory used by Arduino IDE. 
+
+This directory structure can be set up the code from this gem (See "Code example" below). 
+
+Also GIT related files (such as .gitignore and .gitkeep) are automatically added (but doesn't execute GIT commands so if GIT is not used, those files can be simply ignored). 
 
 The default directory structure is 
 
@@ -47,7 +53,8 @@ The default directory structure is
       |- cmake
       |    |- ArduinoToolchain.cmake
       |    |- Platform
-      |        |- Arduino.cmake  
+      |        |- Arduino.cmake 
+      |- libraries 
       |- (name of Arduino sketch underlined)
            |--build
            |--src
@@ -62,7 +69,8 @@ example:
       |- cmake
       |    |- ArduinoToolchain.cmake
       |    |- Platform
-      |        |- Arduino.cmake  
+      |        |- Arduino.cmake 
+      |- libraries 
       |- blink_customized
            |--build
            |--src
@@ -99,6 +107,7 @@ You can change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT en
 
     # Configuring ArduinoSketchBuilder (copies cmake directory under the specified root_directory):
     root_directory = File.expand_path('~/.arduino_sketches')
+    # Path to the sketch to be put under the directory structure:
     arduino_sketch_file_path = File.expand_path('~/temp/BlinkCustomized.ino')
     setup.setup(root_directory, arduino_sketch_file_path)  
 
@@ -106,31 +115,36 @@ You can change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT en
 
     require "arduino_sketch_builder"
 
-    arduino_cmake_build = ArduinoSketchBuilder::ArduinoCmakeBuild.new
-
     main_directory = File.expand_path('~/.arduino_sketches/blink_customized')
     build_directory = File.join(main_directory, "build")
 
+    # Instantiate ArduinoCmakeBuild with state == :initial (It's a state machine):
+    arduino_cmake_build = ArduinoSketchBuilder::ArduinoCmakeBuild.new(main_directory, build_directory)
+
     # Execute cmake
-    #   raises error if state at the point of execution is not :initial    
+    #   raises error if state at the point of execution is not :initial (i.e. precondition: state == :initial)
     #   Success: state == :cmake_complete
     #   Failure: state == :cmake_incomplete
     #   arduino_cmake_build.message gives message such as error message in case of failure. 
-    state = arduino_cmake_build.cmake(build_directory, main_directory)
+    state = arduino_cmake_build.cmake
 
     # Execute make
-    #   raises error if state at the point of execution is not :cmake_complete    
+    #   raises error if state at the point of execution is not :cmake_complete (i.e. precondition: state == :cmake_complete)
     #   Success: state == :make_complete
     #   Failure: state == :make_incomplete
     #   arduino_cmake_build.message gives message such as error message in case of failure. 
-    state = arduino_cmake_build.make(build_directory)    
+    state = arduino_cmake_build.make    
 
     # Execute make upload
-    #   raises error if state at the point of execution is not :make_complete    
+    #   raises error if state at the point of execution is not :make_complete (i.e. precondition: state == :make_complete)  
     #   Success: state == :make_upload_complete
     #   Failure: state == :make_upload_incomplete
     #   arduino_cmake_build.message gives message such as error message in case of failure. 
-    state = arduino_cmake_build.make_upload(build_directory)     
+    state = arduino_cmake_build.make_upload     
+
+## TODOS
+
+ - The library should be able to be put under (root directory)/libraries
 
 ## Contributing
 
