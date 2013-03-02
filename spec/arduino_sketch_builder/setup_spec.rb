@@ -81,6 +81,33 @@ describe ArduinoSketchBuilder::Setup do
 
     end
 
+    context "Arduino board type and port" do    
+
+      it "should create a directory structure for an Arduino sketch with specified board ID and port" do
+
+        root_directory = TEMP_DIRECTORY
+
+        @setup.setup(root_directory, ARDUINO_SKETCH_FILE_PATH, board_type: "diecimila", board_port: "/dev/cu.usbmodem411")
+
+        Dir.exists?(File.join(root_directory, "blink_customized_for_test")).should be_true
+        File.exists?(File.join(root_directory, "blink_customized_for_test", "CMakeLists.txt")).should be_true
+        Dir.exists?(File.join(root_directory, "blink_customized_for_test", "src")).should be_true
+        File.exists?(File.join(root_directory, "blink_customized_for_test", "src", "CMakeLists.txt")).should be_true
+        Dir.exists?(File.join(root_directory, "blink_customized_for_test", "src", "BlinkCustomizedForTest")).should be_true
+        File.exists?(File.join(root_directory, "blink_customized_for_test", "src", "BlinkCustomizedForTest", "BlinkCustomizedForTest.ino")).should be_true
+        Dir.exists?(File.join(root_directory, "blink_customized_for_test", "build")).should be_true
+
+        # The following checks the generated file with the full path, hence, system specific (e.g. /Users/). 
+        # Hence, it's considered that the unit test for c_make_lists_file_generator covers it. 
+        # File.read(File.join(root_directory, "blink_customized_for_test", "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "MainCMakeLists.txt"))
+        # This one also, it's considered that the unit test for c_make_lists_file_generator covers it.
+        # File.read(File.join(root_directory, "blink_customized_for_test", "src", "CMakeLists.txt")).should == File.read(File.join(FIXTURES_DIRECTORY, "CMakeListsForTestSketch2.txt"))
+        File.read(File.join(root_directory, "blink_customized_for_test", "src", "BlinkCustomizedForTest", "BlinkCustomizedForTest.ino")).should == File.read(File.join(ARDUINO_SKETCHES_FIXTURE_DIRECTORY, "src", "BlinkCustomizedForTest", "BlinkCustomizedForTest.ino"))    
+
+      end      
+
+    end
+
   end
 
 end

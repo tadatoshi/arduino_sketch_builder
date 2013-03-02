@@ -21,7 +21,7 @@ Or install it yourself as:
 
 Ruby 2.0.0 or more. 
 
- * If ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT are used to specify the board ID (e.g uno) and the port (e.g. /dev/tty.usbmodem411) instead of passing them to the method in Ruby code, works with Ruby 1.9.3, too. 
+ * If ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT are used to specify the board ID (e.g uno) and the port (e.g. /dev/tty.usbmodem411) instead of passing them as "ketword arguments" to the method in Ruby code, works with Ruby 1.9.3, too. 
  * Strongly recommended to use Ruby 2.0.0 since this gem is intended to use its benefits and Ruby 2.0.0 is compatible with Ruby 1.9.3 if you need to run other code written for Ruby 1.9.3 with this gem. 
 
 Arduino SDK version 0.19 or higher. 
@@ -85,7 +85,9 @@ The default board ID: uno
 
 The default port: /dev/tty.usbmodem411
 
-You can change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT environment variables. 
+You can specify them through ArduinoSketchBuilder::Setup.new.setup method (See "Code example" section below). 
+
+You can also change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT environment variables at runtime. 
 
 ### Code example
 
@@ -110,6 +112,18 @@ You can change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT en
     # Path to the sketch to be put under the directory structure:
     arduino_sketch_file_path = File.expand_path('~/temp/BlinkCustomized.ino')
     setup.setup(root_directory, arduino_sketch_file_path)  
+
+If Arduino board type and port are different from the default, 
+
+    require "arduino_sketch_builder"
+
+    setup = ArduinoSketchBuilder::Setup.new
+
+    # Configuring ArduinoSketchBuilder (copies cmake directory under the specified root_directory):
+    root_directory = File.expand_path('~/.arduino_sketches')
+    # Path to the sketch to be put under the directory structure:
+    arduino_sketch_file_path = File.expand_path('~/temp/BlinkCustomized.ino')
+    setup.setup(root_directory, arduino_sketch_file_path, board_type: "diecimila", board_port: "/dev/cu.usbmodem411")
 
 #### Executing cmake commands - compile, make, and make upload
 

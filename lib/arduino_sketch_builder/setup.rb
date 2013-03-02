@@ -22,7 +22,7 @@ class ArduinoSketchBuilder::Setup
 
   end
 
-  def setup(root_directory, sketch_file_path)
+  def setup(root_directory, sketch_file_path, board_type: "uno", board_port: "/dev/tty.usbmodem411")
 
     sketch_file_name = File.basename(sketch_file_path)
   	sketch_name = sketch_file_name.split('.').first
@@ -35,7 +35,7 @@ class ArduinoSketchBuilder::Setup
 
     c_make_lists_file_generator = ArduinoSketchBuilder::CMakeListsFileGenerator.new
     c_make_lists_file_generator.generate_main(root_directory, File.join(root_directory, main_directory_name))
-    c_make_lists_file_generator.generate_sketch_specific(sketch_name, File.join(root_directory, main_directory_name, 'src'))
+    c_make_lists_file_generator.generate_sketch_specific(sketch_name, File.join(root_directory, main_directory_name, 'src'), board_type: board_type, board_port: board_port)
 
     File.write(File.join(root_directory, main_directory_name, 'src', sketch_name, sketch_file_name), File.read(sketch_file_path))    
 
