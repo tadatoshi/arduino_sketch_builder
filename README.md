@@ -21,9 +21,6 @@ Or install it yourself as:
 
 Ruby 2.0.0 or more. 
 
- * If ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PORT are used to specify the board ID (e.g uno) and the port (e.g. /dev/tty.usbmodem411) instead of passing them as "ketword arguments" to the method in Ruby code, works with Ruby 1.9.3, too. 
- * Strongly recommended to use Ruby 2.0.0 since this gem is intended to use its benefits and Ruby 2.0.0 is compatible with Ruby 1.9.3 if you need to run other code written for Ruby 1.9.3 with this gem. 
-
 Arduino SDK version 0.19 or higher. 
 
 cmake - http://www.cmake.org/cmake/resources/software.html

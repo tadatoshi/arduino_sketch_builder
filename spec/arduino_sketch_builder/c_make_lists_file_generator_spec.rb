@@ -2,9 +2,6 @@ require 'spec_helper'
 
 describe ArduinoSketchBuilder::CMakeListsFileGenerator do
 
-  FIXTURES_DIRECTORY = File.expand_path('../../fixtures', __FILE__)
-  TEMP_DIRECTORY = File.expand_path('../../temp', __FILE__)
-
   before(:each) do
   	FileUtils.rm_rf(Dir.glob("#{TEMP_DIRECTORY}/*"))
     @c_make_lists_file_generator = ArduinoSketchBuilder::CMakeListsFileGenerator.new

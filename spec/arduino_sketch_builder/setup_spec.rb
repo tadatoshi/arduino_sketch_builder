@@ -3,11 +3,9 @@ require 'spec_helper'
 describe ArduinoSketchBuilder::Setup do
 
   ARDUINO_CMAKE_DIRECTORY = File.expand_path('../../../arduino-cmake', __FILE__)
-  FIXTURES_DIRECTORY = File.expand_path('../../fixtures', __FILE__)
   ARDUINO_SKETCHES_FIXTURE_DIRECTORY = File.expand_path('../../arduino_sketches_fixture', __FILE__)
   ARDUINO_SKETCH_FILE_PATH = File.expand_path(File.join(ARDUINO_SKETCHES_FIXTURE_DIRECTORY, 'src/BlinkCustomizedForTest/BlinkCustomizedForTest.ino'), __FILE__)
   TEMPLATES_DIRECTORY = File.expand_path('../../../templates', __FILE__)
-  TEMP_DIRECTORY = File.expand_path('../../temp', __FILE__)
 
   before(:each) do
   	FileUtils.rm_rf(Dir.glob("#{TEMP_DIRECTORY}/*"))
