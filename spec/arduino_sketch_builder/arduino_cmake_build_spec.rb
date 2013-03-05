@@ -102,4 +102,23 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
 
   end    
 
+  context "one method to do cmake, make and make upload" do
+
+    it "should execute cmake, make and make upload" do
+
+      @arduino_cmake_build.state.should == :initial
+      File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_false
+      File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_false
+
+      @arduino_cmake_build.build_and_upload.should == :make_upload_complete
+
+      @arduino_cmake_build.state.should == :make_upload_complete 
+
+      File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_true
+      File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_true
+
+    end
+
+  end
+
 end

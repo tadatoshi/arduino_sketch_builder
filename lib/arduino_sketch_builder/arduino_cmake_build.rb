@@ -25,6 +25,14 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
     @state.message
   end
 
+  def build_and_upload
+    self.cmake
+    return self.state unless self.state == :cmake_complete
+    self.make
+    return self.state unless self.state == :make_complete
+    self.make_upload
+  end
+
   [:cmake, :make, :make_upload].each_with_index do |method_name, index|
     
     define_method(method_name) do

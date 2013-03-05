@@ -122,7 +122,24 @@ If Arduino board type and port are different from the default,
     arduino_sketch_file_path = File.expand_path('~/temp/BlinkCustomized.ino')
     setup.setup(root_directory, arduino_sketch_file_path, board_type: "diecimila", board_port: "/dev/cu.usbmodem411")
 
-#### Executing cmake commands - compile, make, and make upload
+#### Building and uploading the sketch
+
+    require "arduino_sketch_builder"
+
+    main_directory = File.expand_path('~/.arduino_sketches/blink_customized')
+    build_directory = File.join(main_directory, "build")
+
+    # Instantiate ArduinoCmakeBuild with state == :initial (It's a state machine):
+    arduino_cmake_build = ArduinoSketchBuilder::ArduinoCmakeBuild.new(main_directory, build_directory)
+
+    # Build and upload
+    #   raises error if state at the point of execution is not :initial (i.e. precondition: state == :initial)  
+    #   Success: state == :make_upload_complete
+    #   Failure: state == :cmake_incomplete, :make_incomplete, or :make_upload_incomplete depending on the step at the time of the failure
+    #   arduino_cmake_build.message gives message such as error message in case of failure. 
+    state = arduino_cmake_build.build_and_upload      
+
+#### (Optional: individual steps for "Building and uploading the sketch" above): Executing cmake commands - compile, make, and make upload
 
     require "arduino_sketch_builder"
 
