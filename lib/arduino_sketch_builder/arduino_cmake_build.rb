@@ -66,7 +66,7 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   def reset
 
-    FileUtils.rm_rf(Dir.glob("#{BUILD_DIRECTORY}/*"))
+    FileUtils.rm_rf(Dir.glob("#{@build_directory}/*"))
     @state = INITIAL
 
     self.state

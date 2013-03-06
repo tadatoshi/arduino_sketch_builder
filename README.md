@@ -111,6 +111,9 @@ You can also change them by setting ARDUINO_DEFAULT_BOARD and ARDUINO_DEFAULT_PO
     #   arduino_sketch_builder.message gives message such as error message in case of failure.  
     state = arduino_sketch_builder.build_and_upload
 
+    # In the case of error, resetting by cleaning up build directory and setting the state to :initial 
+    arduino_sketch_builder.reset
+
 ### Example of code with more control
 
 #### Setting up the directory structure - like the one above under cmake directory
@@ -174,7 +177,11 @@ If Arduino board type and port are different from the default,
     #   Success: state == :make_upload_complete
     #   Failure: state == :make_upload_incomplete
     #   arduino_cmake_build.message gives message such as error message in case of failure. 
-    state = arduino_cmake_build.make_upload     
+    state = arduino_cmake_build.make_upload   
+
+##### In the case of error, resetting by cleaning up build directory and setting the state to :initial
+
+    arduino_cmake_build.reset
 
 ## TODOS
 
