@@ -6,7 +6,7 @@ class ArduinoSketchBuilder::Setup
   ARDUINO_CMAKE_DIRECTORY = File.expand_path('../../../arduino-cmake', __FILE__)
   TEMPLATES_DIRECTORY = File.expand_path('../../../templates', __FILE__)
 
-  def configure(root_directory)
+  def self.configure(root_directory)
 
     FileUtils.cp_r(File.join(ARDUINO_CMAKE_DIRECTORY, 'cmake'), root_directory)
 

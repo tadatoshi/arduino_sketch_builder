@@ -3,13 +3,11 @@ require 'spec_helper'
 describe ArduinoSketchBuilder::Setup do
 
   ARDUINO_CMAKE_DIRECTORY = File.expand_path('../../../arduino-cmake', __FILE__)
-  ARDUINO_SKETCHES_FIXTURE_DIRECTORY = File.expand_path('../../arduino_sketches_fixture', __FILE__)
-  ARDUINO_SKETCH_FILE_PATH = File.expand_path(File.join(ARDUINO_SKETCHES_FIXTURE_DIRECTORY, 'src/BlinkCustomizedForTest/BlinkCustomizedForTest.ino'), __FILE__)
+  ARDUINO_SKETCH_FILE_PATH = File.join(ARDUINO_SKETCHES_FIXTURE_DIRECTORY, 'src/BlinkCustomizedForTest/BlinkCustomizedForTest.ino')
   TEMPLATES_DIRECTORY = File.expand_path('../../../templates', __FILE__)
 
   before(:each) do
   	FileUtils.rm_rf(Dir.glob("#{TEMP_DIRECTORY}/*"))
-    @setup = ArduinoSketchBuilder::Setup.new
   end
 
   context "configure" do
@@ -18,7 +16,7 @@ describe ArduinoSketchBuilder::Setup do
 
       root_directory = TEMP_DIRECTORY
 
-      @setup.configure(root_directory)
+      ArduinoSketchBuilder::Setup.configure(root_directory)
 
       Dir.exists?(File.join(root_directory, "cmake")).should be_true 
       File.exists?(File.join(root_directory, "cmake", "ArduinoToolchain.cmake")).should be_true
@@ -34,7 +32,7 @@ describe ArduinoSketchBuilder::Setup do
 
       root_directory = TEMP_DIRECTORY
 
-      @setup.configure(root_directory)
+      ArduinoSketchBuilder::Setup.configure(root_directory)
 
       Dir.exists?(File.join(root_directory, "libraries")).should be_true 
       File.exists?(File.join(root_directory, "libraries", ".gitkeep")).should be_true
@@ -45,7 +43,7 @@ describe ArduinoSketchBuilder::Setup do
 
       root_directory = TEMP_DIRECTORY
 
-      @setup.configure(root_directory)
+      ArduinoSketchBuilder::Setup.configure(root_directory)
 
       File.exists?(File.join(root_directory, ".gitignore")).should be_true
       File.read(File.join(root_directory, ".gitignore")).should == File.read(File.join(TEMPLATES_DIRECTORY, "root_gitignore_template"))                
@@ -55,6 +53,10 @@ describe ArduinoSketchBuilder::Setup do
   end
 
   context "setup" do
+
+    before(:each) do
+      @setup = ArduinoSketchBuilder::Setup.new
+    end    
 
     it "should create a directory structure for an Arduino sketch" do
 

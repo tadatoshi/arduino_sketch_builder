@@ -1,4 +1,5 @@
 require "open3"
+require "fileutils"
 
 class ArduinoSketchBuilder::ArduinoCmakeBuild
 
@@ -8,12 +9,13 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
   CMAKE_COMPLETE = State.new(:cmake_complete, "success") 
   MAKE_COMPLETE = State.new(:make_complete, "success")
   MAKE_UPLOAD_COMPLETE = State.new(:make_upload_complete, "success")
+  COMPLETE = State.new(:complete, "success")
 
-  STATE_SEQUENCE = [INITIAL, CMAKE_COMPLETE, MAKE_COMPLETE, MAKE_UPLOAD_COMPLETE]
+  STATE_SEQUENCE = [INITIAL, CMAKE_COMPLETE, MAKE_COMPLETE, MAKE_UPLOAD_COMPLETE, COMPLETE]
 
   def initialize(main_directory, build_directory)
-    @main_directory = main_directory
-    @build_directory = build_directory
+    @main_directory = File.expand_path(main_directory)
+    @build_directory = File.expand_path(build_directory)
     @state = INITIAL
   end
 
@@ -27,10 +29,13 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
 
   def build_and_upload
     self.cmake
-    return self.state unless self.state == :cmake_complete
+    return self.state unless @state == CMAKE_COMPLETE
     self.make
-    return self.state unless self.state == :make_complete
+    return self.state unless @state == MAKE_COMPLETE
     self.make_upload
+    @state = COMPLETE if @state == MAKE_UPLOAD_COMPLETE
+
+    self.state
   end
 
   [:cmake, :make, :make_upload].each_with_index do |method_name, index|
@@ -56,6 +61,15 @@ class ArduinoSketchBuilder::ArduinoCmakeBuild
       self.state
 
     end
+
+  end
+
+  def reset
+
+    FileUtils.rm_rf(Dir.glob("#{BUILD_DIRECTORY}/*"))
+    @state = INITIAL
+
+    self.state
 
   end
 

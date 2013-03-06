@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe ArduinoSketchBuilder::ArduinoCmakeBuild do
 
-  MAIN_DIRECTORY = File.expand_path('../../arduino_sketches_fixture', __FILE__)
-  BUILD_DIRECTORY = "#{MAIN_DIRECTORY}/build"
+  MAIN_DIRECTORY = ARDUINO_SKETCHES_FIXTURE_DIRECTORY
+  BUILD_DIRECTORY = File.join(MAIN_DIRECTORY, "build")
 
   before(:each) do
   	FileUtils.rm_rf(Dir.glob("#{BUILD_DIRECTORY}/*"))
@@ -110,12 +110,29 @@ describe ArduinoSketchBuilder::ArduinoCmakeBuild do
       File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_false
       File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_false
 
-      @arduino_cmake_build.build_and_upload.should == :make_upload_complete
+      @arduino_cmake_build.build_and_upload.should == :complete
 
-      @arduino_cmake_build.state.should == :make_upload_complete 
+      @arduino_cmake_build.state.should == :complete 
 
       File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_true
       File.exists?(File.join(BUILD_DIRECTORY, "src", "blink_customized_for_test.hex")).should be_true
+
+    end
+
+  end
+
+  context "reset" do
+
+    it "should clean up build directory and reset the state to :initial" do
+
+      @arduino_cmake_build.state.should == :initial
+      @arduino_cmake_build.cmake.should == :cmake_complete
+
+      File.exists?(File.join(BUILD_DIRECTORY, "Makefile")).should be_true
+
+      @arduino_cmake_build.reset.should == :initial
+
+      Dir.entries(BUILD_DIRECTORY).should == [".", "..", ".gitkeep"]
 
     end
 
